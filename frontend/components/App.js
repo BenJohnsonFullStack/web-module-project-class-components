@@ -45,13 +45,27 @@ export default class App extends React.Component {
     })
   }
 
+  handleToggle = (e) => {
+    this.setState({
+      ...this.state,
+      todos: this.state.todos.map(todo => {
+        if(todo.id === id) {
+          return ({
+            ...todo,
+            completed: !completed
+          })
+        } else return todo
+      })
+    })
+  }
+
   render() {
     const { todos } = this.state
 
     return (
       <div>
         <h1>ToDo List</h1>
-        <TodoList todos={todos} id={id}/>
+        <TodoList todos={todos} id={id} toggle={this.handleToggle}/>
         <Form add={this.handleAdd}/>
         <button onClick={this.handleClear}>Clear</button>
       </div>
