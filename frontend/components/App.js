@@ -3,6 +3,7 @@ import TodoList from './TodoList'
 import Form from './Form'
 
 export default class App extends React.Component {
+  
   constructor() {
     super()
     this.state = {
@@ -20,15 +21,39 @@ export default class App extends React.Component {
       ]
     }
   }
+
+  handleAdd = (name) => {
+
+    const newTodo = {
+      name: name,
+      id: Date.now(),
+      completed: false
+    }
+
+    this.setState({
+      ...this.state,
+      todos: [...this.state.todos, newTodo]
+    })
+  }
+
+  handleClear = () => {
+    this.setState({
+      ...this.state,
+      todos: this.state.todos.filter(todo => {
+        return (todo.completed === false)
+      })
+    })
+  }
+
   render() {
     const { todos } = this.state
 
     return (
       <div>
         <h1>ToDo List</h1>
-        <TodoList todos={todos}/>
-        <Form />
-        <button>Clear</button>
+        <TodoList todos={todos} id={id}/>
+        <Form add={this.handleAdd}/>
+        <button onClick={this.handleClear}>Clear</button>
       </div>
     )
   }
